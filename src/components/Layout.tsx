@@ -1,7 +1,6 @@
 import { CalendarCheck, ClipboardList, Dumbbell, ListChecks, LogOut, UsersRound } from 'lucide-react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../lib/auth-context'
-import { isSupabaseConfigured } from '../lib/supabase'
 
 const NAV = [
   { to: '/', label: '今天', icon: CalendarCheck },
@@ -64,19 +63,11 @@ export default function Layout() {
         </div>
       </header>
 
-      {!isSupabaseConfigured ? (
-        <div className="border-b border-amber-200 bg-amber-50">
-          <div className="mx-auto max-w-3xl px-4 py-1.5 text-[12px] text-amber-800">
-            预览模式 —— 还没填数据库密钥，数据都是假的
-          </div>
-        </div>
-      ) : (
-        <div className="border-b border-amber-200 bg-amber-50">
-          <div className="mx-auto max-w-3xl px-4 py-1.5 text-[12px] text-amber-800">
-            账号已接数据库；训练数据还是假的，第 3-4 步换成真的
-          </div>
-        </div>
-      )}
+      {/*
+        这里原来有一条黄色的提示条，写着「界面预览版 / 账号已接数据库；训练数据还是假的」。
+        那是第 2、3 步开发途中的临时提示，四种运动全部接上真数据之后就已经过时了。
+        它会让人误以为数据是假的，所以删掉。**不要再加回来。**
+      */}
 
       <main className="mx-auto max-w-3xl px-4 pt-5 pb-24 md:pb-10">
         <Outlet />
