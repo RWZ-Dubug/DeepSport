@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DeepSport · 训练计划与记录</title>
+
+    <!--
+      白屏兜底装置。
+      为什么需要：如果 JS 在「模块加载」阶段就出错，React 根本来不及渲染，
+      页面就是一片空白，什么提示都没有 —— 这是最难查的故障。
+      下面这段在 React 之前就把错误显示出来。
+    -->
+    <script>
+      function showBootError(text) {
+        var el = document.getElementById('boot-error')
+        if (!el || el.dataset.shown === '1') return
+        el.dataset.shown = '1'
+        el.style.display = 'block'
+        el.textContent = text
+      }
+
+      window.addEventListener('error', function (e) {
+        if (e.target && e.target.tagName === 'SCRIPT') {
+          showBootError('脚本加载失败：' + (e.target.src || '?'))
+          return
+        }
+        showBootError(
+          '启动失败：' + (e.message || e.error || '未知错误') + '\n' + (e.filename || '') + ':' + (e.lineno || ''),
+        )
+      })
+
+      window.addEventListener('unhandledrejection', function (e) {
+        var reason = e.reason
+        showBootError('启动失败（异步）：' + (reason && reason.message ? reason.message : String(reason)))
+      })
+
+      // 3 秒后如果 React 还没挂上任何东西，说明 JS 压根没跑起来
+      window.addEventListener('DOMContentLoaded', function () {
+        setTimeout(function () {
+          var root = document.getElementById('root')
+          if (root && root.children.length === 0) {
+            showBootError(
+              '页面 3 秒后仍未启动。最常见的原因是 JavaScript 没加载成功。\n' +
+                '请按 F12 打开控制台，切到 Network（网络）标签，刷新一次，看有没有红色的 404 或失败请求。',
+            )
+          }
+        }, 3000)
+      })
+    </script>
+  </head>
+  <body>
+    <div
+      id="boot-error"
+      style="
+        display: none;
+        margin: 16px;
+        padding: 14px 16px;
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+        background: #fef2f2;
+        color: #b91c1c;
+        font: 13px/1.7 system-ui, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        white-space: pre-wrap;
+        word-break: break-all;
+      "
+    ></div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

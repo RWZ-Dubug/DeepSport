@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans:
+    system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC',
+    sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 数字等宽对齐，表格和统计数字看起来更整齐 */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
