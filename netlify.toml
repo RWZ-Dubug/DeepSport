@@ -1,0 +1,18 @@
+# Netlify 部署配置
+#
+# 这个文件告诉 Netlify 三件事：
+#   1. 用什么命令打包（和本地一样）
+#   2. 打包产物在哪个目录
+#   3. 找不到的路径交给 index.html（单页应用必需，否则直接访问 /plan 会 404）
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# 单页应用路由回退。
+# 作用：任何找不到的路径都返回 index.html（状态码 200），剩下的交给前端路由。
+# 不加这条的话，首页能开，但刷新 /records 这样的页面、或者把链接发给别人，都会 404。
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
